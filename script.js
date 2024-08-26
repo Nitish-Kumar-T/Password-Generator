@@ -7,6 +7,7 @@ function generatePassword() {
     const useNumbers = document.getElementById('numbers').checked;
     const useSymbols = document.getElementById('symbols').checked;
     const excludeSimilar = document.getElementById('exclude-similar').checked;
+    const avoidAmbiguous = document.getElementById('avoid-ambiguous').checked;
 
     let chars = '';
     if (useUppercase) chars += 'ABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -16,6 +17,10 @@ function generatePassword() {
     
     if (excludeSimilar) {
         chars = chars.replace(/[ilLI|`1oO0]/g, '');
+    }
+    
+    if (avoidAmbiguous) {
+        chars = chars.replace(/[{}[\]()/\\'"~,;.<>]/g, '');
     }
 
     if (chars === '') {
@@ -56,14 +61,30 @@ function updateStrengthMeter(password) {
 
 function calculatePasswordStrength(password) {
     let strength = 0;
-    if (password.length >= 12) strength += 25;
-    if (password.match(/[a-z]+/)) strength += 10;
-    if (password.match(/[A-Z]+/)) strength += 20;
-    if (password.match(/[0-9]+/)) strength += 20;
-    if (password.match(/[$@#&!]+/)) strength += 25;
-    strength += Math.min(password.length * 2, 30);
+    const length = password.length;
+    
 
-    return Math.min(strength, 100);
+    strength += Math.min(length * 4, 25);
+    
+
+    if (password.match(/[a-z]/)) strength += 10;
+    
+
+    if (password.match(/[A-Z]/)) strength += 15;
+    
+
+    if (password.match(/\d/)) strength += 10;
+    
+    if (password.match(/[^a-zA-Z\d]/)) strength += 15;
+    
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/) && password.match(/\d/) && password.match(/[^a-zA-Z\d]/)) {
+        strength += 15;
+    }
+    
+    const repeats = (password.match(/(.)\1/g) || []).length;
+    strength -= repeats * 2;
+
+    return Math.max(0, Math.min(strength, 100));
 }
 
 function copyPassword() {
@@ -116,8 +137,43 @@ function updateLengthValue() {
     document.getElementById('length-value').textContent = document.getElementById('length').value;
 }
 
+function checkPasswordStrength() {
+    const password = document.getElementById('check-password').value;
+    const strength = calculatePasswordStrength(password);
+    const resultDiv = document.getElementById('strength-result');
+    
+    let strengthText, color;
+    if (strength < 50) {
+        strengthText = 'Weak';
+        color = '#ff4d4d';
+    } else if (strength < 80) {
+        strengthText = 'Moderate';
+        color = '#ffd700';
+    } else {
+        strengthText = 'Strong';
+        color = '#4CAF50';
+    }
+    
+    resultDiv.innerHTML = `Password Strength: <span style="color: ${color};">${strengthText}</span> (${strength}/100)`;
+}
+
+function switchTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+}
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
     generatePassword();
     document.getElementById('length').addEventListener('input', updateLengthValue);
     updateLengthValue();
+    
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
 });

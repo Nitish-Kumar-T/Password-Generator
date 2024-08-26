@@ -23,12 +23,39 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background-color: #ecf0f1;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-btn.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 .password-display {
     display: flex;
     margin-bottom: 20px;
 }
 
-#password {
+#password, #check-password {
     flex-grow: 1;
     padding: 10px;
     font-size: 16px;
@@ -83,7 +110,7 @@ input[type="checkbox"] {
     margin-right: 10px;
 }
 
-#generate-btn {
+#generate-btn, #strength-checker button {
     width: 100%;
     padding: 10px;
     background-color: #2ecc71;
@@ -94,7 +121,7 @@ input[type="checkbox"] {
     font-size: 16px;
 }
 
-#generate-btn:hover {
+#generate-btn:hover, #strength-checker button:hover {
     background-color: #27ae60;
 }
 
@@ -107,10 +134,10 @@ input[type="checkbox"] {
     height: 20px;
 }
 
-#strength-text {
+#strength-text, #strength-result {
     display: block;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 10px;
     font-weight: bold;
 }
 

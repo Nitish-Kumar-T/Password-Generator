@@ -9,43 +9,58 @@
 <body>
     <div class="container">
         <h1>Password Generator</h1>
-        <div class="password-display">
-            <input type="text" id="password" readonly>
-            <button id="copy-btn" onclick="copyPassword()">Copy</button>
-            <button id="show-hide-btn" onclick="togglePasswordVisibility()">Show</button>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="generator">Generator</button>
+            <button class="tab-btn" data-tab="strength-checker">Strength Checker</button>
         </div>
-        <div class="options">
-            <div class="option">
-                <label for="length">Password Length:</label>
-                <input type="range" id="length" min="8" max="64" value="16">
-                <span id="length-value">16</span>
+        <div id="generator" class="tab-content active">
+            <div class="password-display">
+                <input type="text" id="password" readonly>
+                <button id="copy-btn" onclick="copyPassword()">Copy</button>
+                <button id="show-hide-btn" onclick="togglePasswordVisibility()">Show</button>
             </div>
-            <div class="option">
-                <input type="checkbox" id="uppercase" checked>
-                <label for="uppercase">Include Uppercase</label>
+            <div class="options">
+                <div class="option">
+                    <label for="length">Password Length:</label>
+                    <input type="range" id="length" min="8" max="128" value="16">
+                    <span id="length-value">16</span>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="uppercase" checked>
+                    <label for="uppercase">Include Uppercase</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="lowercase" checked>
+                    <label for="lowercase">Include Lowercase</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="numbers" checked>
+                    <label for="numbers">Include Numbers</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="symbols">
+                    <label for="symbols">Include Symbols</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="exclude-similar">
+                    <label for="exclude-similar">Exclude Similar Characters</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="avoid-ambiguous">
+                    <label for="avoid-ambiguous">Avoid Ambiguous Characters</label>
+                </div>
             </div>
-            <div class="option">
-                <input type="checkbox" id="lowercase" checked>
-                <label for="lowercase">Include Lowercase</label>
-            </div>
-            <div class="option">
-                <input type="checkbox" id="numbers" checked>
-                <label for="numbers">Include Numbers</label>
-            </div>
-            <div class="option">
-                <input type="checkbox" id="symbols">
-                <label for="symbols">Include Symbols</label>
-            </div>
-            <div class="option">
-                <input type="checkbox" id="exclude-similar">
-                <label for="exclude-similar">Exclude Similar Characters</label>
+            <button id="generate-btn" onclick="generatePassword()">Generate Password</button>
+            <div class="strength-meter">
+                <label for="strength">Password Strength:</label>
+                <progress id="strength" value="0" max="100"></progress>
+                <span id="strength-text"></span>
             </div>
         </div>
-        <button id="generate-btn" onclick="generatePassword()">Generate Password</button>
-        <div class="strength-meter">
-            <label for="strength">Password Strength:</label>
-            <progress id="strength" value="0" max="100"></progress>
-            <span id="strength-text"></span>
+        <div id="strength-checker" class="tab-content">
+            <input type="text" id="check-password" placeholder="Enter password to check">
+            <button onclick="checkPasswordStrength()">Check Strength</button>
+            <div id="strength-result"></div>
         </div>
         <div class="history">
             <h2>Password History</h2>
