@@ -3,9 +3,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    color: #333;
 }
 
 .container {
@@ -13,12 +14,12 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    width: 400px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
-    color: #333;
+    color: #2c3e50;
     margin-bottom: 20px;
 }
 
@@ -35,17 +36,24 @@ h1 {
     border-radius: 4px 0 0 4px;
 }
 
-#copy-btn {
+#copy-btn, #show-hide-btn {
     padding: 10px 15px;
-    background-color: #4CAF50;
+    background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 0 4px 4px 0;
     cursor: pointer;
 }
 
-#copy-btn:hover {
-    background-color: #45a049;
+#copy-btn {
+    border-radius: 0 4px 4px 0;
+}
+
+#show-hide-btn {
+    border-radius: 0;
+}
+
+#copy-btn:hover, #show-hide-btn:hover {
+    background-color: #2980b9;
 }
 
 .options {
@@ -54,26 +62,31 @@ h1 {
 
 .option {
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 label {
-    display: inline-block;
-    width: 150px;
+    flex-grow: 1;
 }
 
-input[type="number"] {
-    width: 50px;
-    padding: 5px;
+input[type="range"] {
+    width: 200px;
+}
+
+#length-value {
+    width: 30px;
+    text-align: right;
 }
 
 input[type="checkbox"] {
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 #generate-btn {
     width: 100%;
     padding: 10px;
-    background-color: #008CBA;
+    background-color: #2ecc71;
     color: white;
     border: none;
     border-radius: 4px;
@@ -82,7 +95,7 @@ input[type="checkbox"] {
 }
 
 #generate-btn:hover {
-    background-color: #007B9A;
+    background-color: #27ae60;
 }
 
 .strength-meter {
@@ -92,4 +105,44 @@ input[type="checkbox"] {
 #strength {
     width: 100%;
     height: 20px;
+}
+
+#strength-text {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.history {
+    margin-top: 30px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#password-history {
+    list-style-type: none;
+    padding: 0;
+}
+
+#password-history li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#password-history li button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#password-history li button:hover {
+    background-color: #c0392b;
 }
